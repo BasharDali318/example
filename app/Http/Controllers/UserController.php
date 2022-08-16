@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Transaction;
 class UserController extends Controller
 {
     //
@@ -80,18 +81,88 @@ public function update(Request $request, $id)
    * @param  \App\Models\User  $dep
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy($id , $admin_name,$uid)
   {
       //
       $user =User::where('id',"=", $id)->first();
       if ($user->role=='super'){
+        $transaction= new Transaction();
+        $transaction->action = 'delete user';
+        $transaction->action_by =$admin_name;
+        $transaction->action_on = $user->name;
+        $transaction->action_user =$uid;
+        $transaction->save();
           return  redirect()->route('users');
       }
       else{
-          User::where("id", $user->id)->delete();
+        $transaction= new Transaction();
+        $transaction->action_name = 'delete user';
+        $transaction->action_by = $admin_name;
+        $transaction->action_on = $user->name;
+        $transaction->action_user =$uid;
+        $transaction->save();
+        User::where("id", $user->id)->delete();
           
           return  redirect()->route('users');
       }
       
   }
+  /**
+ * ban the specified resource in storage.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @param  \App\Models\User  $user
+ * @return \Illuminate\Http\Response
+ */
+public function ban($id, $admin_name,$uid)
+{
+    //
+    $user =User::where('id',"=", $id)->first();
+    if ($user->role=='super' ||$user->role=='admin'){
+  return  redirect()->route('users');}
+      else{
+        $transaction= new Transaction();
+        $transaction->action_name = 'ban user';
+        $transaction->action_by = $admin_name;
+        $transaction->action_on = $user->name;
+        $transaction->action_user =$uid;
+        $transaction->save();
+    $user->status = '0';
+    $user->save();
+  return redirect()->route('users');
+      }
+    
+
+
+
+}
+ /**
+ * active the specified resource in storage.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @param  \App\Models\User  $user
+ * @return \Illuminate\Http\Response
+ */
+public function active($id , $admin_name,$uid)
+{
+    //
+    $user =User::where('id',"=", $id)->first();
+    if ($user->role=='super' ||$user->role=='admin'){
+  return  redirect()->route('users');}
+      else{
+        $transaction= new Transaction();
+        $transaction->action_name = 'active user';
+        $transaction->action_by = $admin_name;
+        $transaction->action_on = $user->name;
+        $transaction->action_user =$uid;
+        $transaction->save();
+    $user->status = '1';
+    $user->save();
+  return redirect()->route('users');
+      }
+    
+
+
+
+}
 }

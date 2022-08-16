@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -25,9 +26,8 @@
         <!-- Styles -->
       
     </head>
-
-    
     <body  style="background-color:rgb(10, 10, 10);" >
+    @include('cookie-consent::index')
     <header>
   <!-- Intro settings -->
   <style>
@@ -136,6 +136,16 @@
  @yield('content')
  </main>
 <br><br><br>
+<!-- botman-->
+
+    <script>
+        var botmanWidget = {
+            aboutText: 'Write Something',
+            introMessage: "✋ Hi! I'm form Real Programmer"
+        };
+    </script>
+   
+    <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
 
 <!-- Footer -->
 
@@ -222,4 +232,7 @@
 </footer>
 <!-- Footer -->
     </body>
+
 </html>
+
+

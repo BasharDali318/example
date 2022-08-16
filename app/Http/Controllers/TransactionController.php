@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -15,6 +16,8 @@ class TransactionController extends Controller
     public function index()
     {
         //
+        $transactions = Transaction::all();
+        return view('transactions.index' , compact('transactions'));
     }
 
     /**
@@ -22,9 +25,22 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id, $name,$uid)
     {
         //
+        $user =User::where('id',"=", $id)->first();
+        if ($user->role=='super'||$user->role=='super'){
+            $transaction= new Transaction();
+
+      
+            $transaction->action_name = 'delete user';
+            $transaction->action_by = $name;
+            $transaction->action_user = $uid;
+            $transaction->save();
+         
+        }
+             
+
     }
 
     /**

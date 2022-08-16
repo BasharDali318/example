@@ -1,3 +1,8 @@
+@if (session('error'))
+     <div class="alert alert-danger">
+         {{ session('error') }}
+     </div>
+  @endif
 @extends('layouts.app')
 
 @section('content')
@@ -70,4 +75,5 @@
         </div>
     </div>
 </div>
+
 @endsection

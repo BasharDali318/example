@@ -13,8 +13,9 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
-    }
+      //$this->middleware(['auth', 'verified']);
+      $this->middleware('auth');
+        }
 
     /**
      * Show the application dashboard.
@@ -28,4 +29,5 @@ class HomeController extends Controller
       public function offerwall(){
         return view('offerwall.offerwall');
       }
+      
 }

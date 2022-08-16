@@ -25,6 +25,8 @@
             <th>name</th>
             <th>email</th>
             <th>role</th>
+            <th>points</th>
+            <th>status</th>
         </tr>
     </thead>
     <tbody>
@@ -34,8 +36,15 @@
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
             <td>{{$user->role}}</td>
+            <td>{{$user->points}}</td>
+            <td>{{$user->status}}</td>
             
-            <td> <a href="{{url('/destroy-user/' . $user->id )}}"><button class="uk-button uk-button-default btn btn-danger" style="color:white;"type="button">delete</button></td>
+            <td> <a href="{{url('/destroy-user/' . $user->id . '/by/'. Auth::user()->name.'/'.Auth::user()->id)}}"><button class="uk-button uk-button-default btn btn-danger" style="color:white;"type="button">delete</button></td>
+            @if ($user->status=='1')
+            <td> <a href="{{url('/ban/'. $user->id. '/by/'. Auth::user()->name.'/'.Auth::user()->id)}}"><button class="uk-button uk-button-default btn btn-danger" style="color:white;"type="button">ban</button></td>
+            @elseif($user->status=='0')
+            <td><a href="{{url('/active/' . $user->id . '/by/'. Auth::user()->name.'/'.Auth::user()->id)}}"><button class="uk-button uk-button-default"style="color:green;" type="button">active</button></td>
+            @endif
             <td><a href="{{url('/edit-user/' . $user->id )}}"><button class="uk-button uk-button-default"style="color:green;" type="button">change role</button></td>
         </tr>
         @endforeach

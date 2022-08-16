@@ -2,6 +2,7 @@
 
 @section('content')
 <!-- intro section-->
+
 <section>
 <div
     id="intro-example"
